@@ -1,0 +1,16 @@
+# Site settings
+url: "http://reload.me.uk"
+baseurl: "/talk-the-step-after-styleguides"
+
+sass:
+  sass_dir: .
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+
+markdown: kramdown
+highlighter: pygments
+safe: true
+lsi: false
