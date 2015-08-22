@@ -45,14 +45,6 @@
                         condition: function() { return !document.body.classList; }
                     },
                     {
-                        src: '{{site.baseurl}}/reveal.js/plugin/markdown/marked.js',
-                        condition: function() { return !!document.querySelector( '[data-markdown]' ); }
-                    },
-                    {
-                        src: '{{site.baseurl}}/reveal.js/plugin/markdown/markdown.js',
-                        condition: function() { return !!document.querySelector( '[data-markdown]' ); }
-                    },
-                    {
                         src: '{{site.baseurl}}/reveal.js/plugin/highlight/highlight.js',
                         async: true,
                         condition: function() { return !!document.querySelector( 'pre code' ); },

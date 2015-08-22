@@ -5,6 +5,9 @@ baseurl: "/talk-the-step-after-styleguides"
 sass:
   sass_dir: .
 
+kramdown:
+  input: GFM
+
 exclude:
   - README.md
   - Gemfile
