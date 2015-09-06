@@ -1,53 +1,114 @@
 ---
 ---
 
+$grid-gutter: 32px;
+
 @import "reveal.js/css/reveal";
 @import "reveal.js/css/theme/source/sky";
 
-.reveal section img {
-  border: 0;
-  background: none;
-  box-shadow: 0 0 #000;
-}
+.reveal {
 
-.reveal pre {
-  width: 100%;
-  font-size: 0.68em;
-}
+  .controls {
+    .navigate-up,
+    .navigate-down {
+      display: none;
+    }
+  }
 
-.reveal pre code {
-  max-height: 600px;
-}
+  small {
+    vertical-align: baseline;
+  }
 
-section[data-background] [data-background], section[data-background] [data-background-image] {
-  /* hide any elements that actually represent a background */
-  display: none;
-}
 
-/* blockquotes: */
-.reveal section blockquote.quote {
-  background: #f9f9f9;
-  border-left: 10px solid #ccc;
-  margin: 1.5em 10px;
-  padding: 0.5em 10px;
-  quotes: "\201C""\201D""\2018""\2019";
-}
+  section img {
+    border: 0;
+    background: none;
+    box-shadow: 0 0 #000;
+  }
 
-.reveal section blockquote.quote:before {
-  color: #ccc;
-  content: open-quote;
-  font-size: 4em;
-  line-height: 0.1em;
-  margin-right: 0.25em;
-  vertical-align: -0.4em;
-}
+  pre {
+    width: 100%;
+    font-size: 0.68em;
+  }
 
-.reveal section blockquote.quote p { display: inline; }
-.reveal section blockquote.quote cite:before { content: ' - '; }
+  pre code {
+    max-height: 600px;
+  }
 
-.reveal section blockquote.quote cite {
-  display: block;
-  width: 100%;
-  text-align: right;
-  font-size: 20px;
+  .grid {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      margin-left: -$grid-gutter;
+
+      &:before,
+      &:after {
+          content: " ";
+          display: table;
+      }
+
+      &:after {
+          clear: both;
+      }
+  }
+
+  .grid__item {
+    display: block;
+    float: left;
+    padding-left: $grid-gutter;
+    vertical-align: top;
+    width: 100%;
+    -webkit-box-sizing: border-box;
+       -moz-box-sizing: border-box;
+            box-sizing: border-box;
+  }
+
+  .grid__item pre {
+    width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+
+  }
+
+  .one-whole  { width: 100%; }
+
+  .one-half   { width: 50%; }
+
+  .one-third  { width: 33.333%; }
+  .two-thirds { width: 66.666%; }
+
+  .one-quarter  { width: 25%; }
+
+  section[data-background] [data-background], section[data-background] [data-background-image] {
+    /* hide any elements that actually represent a background */
+    display: none;
+  }
+
+  /* blockquotes: */
+  section blockquote.quote {
+    background: #f9f9f9;
+    border-left: 10px solid #ccc;
+    margin: 1.5em 10px;
+    padding: 0.5em 10px;
+    quotes: "\201C""\201D""\2018""\2019";
+  }
+
+  section blockquote.quote:before {
+    color: #ccc;
+    content: open-quote;
+    font-size: 4em;
+    line-height: 0.1em;
+    margin-right: 0.25em;
+    vertical-align: -0.4em;
+  }
+
+  section blockquote.quote p { display: inline; }
+  section blockquote.quote cite:before { content: ' - '; }
+
+  section blockquote.quote cite {
+    display: block;
+    width: 100%;
+    text-align: right;
+    font-size: 20px;
+  }
 }

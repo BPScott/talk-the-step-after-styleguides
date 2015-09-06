@@ -8,12 +8,7 @@ sass:
 kramdown:
   input: GFM
 
-exclude:
-  - README.md
-  - Gemfile
-  - Gemfile.lock
-
+exclude: [README.md, Gemfile, Gemfile.lock]
 markdown: kramdown
-highlighter: pygments
 safe: true
 lsi: false
