@@ -393,11 +393,11 @@ We're now working with the team behind /radio on a new version
 of iPlayer Radio and we want to share a single visual style across these two
 distinct applications developed by different teams. This means that we need to
 abstract our component library and styleguide out of the /programmes
-application into a neutral location and thatgives us an opportunity to use the
+application into a neutral location and that gives us an opportunity to use the
 things we learned last time in creating a new stricter, formalised approach.
 
 And so we've wrote our new component library, which we've called Amen for
-breakbeat sampling reasons.
+all-radio-project-names-must-be-puns and breakbeat sampling reasons.
 </aside>
 </section>
 
@@ -409,33 +409,41 @@ breakbeat sampling reasons.
   <div class="grid__item one-third"><h3>/progs</h3></div>
   <div class="grid__item one-third"><h3>/radio</h3></div>
 </div>
-</section>
 
 <aside class="notes" markdown="1">
+So we end up with a set of Amen components that are used to build three
+applications: /programmes, /radio and the Amen styleguide.
+
+Now before I go into what Amen contains, I want to talk a little about the
+technology we use, not because it's particularly interesting but because the
+technology stack is the result of two questions we asked ourselves at the
+start of the project.
+
 We're using Composer as a package manager and Twig as our templating engine as
-we're a PHP shop so let's use the best PHP tools for the job. This means that
-potentially the applications can get slightly out of sync if one has deployed a
+we're a PHP shop so let's use the best PHP tools for the job. We're
+distributing Amen as a library through Composer - applications depend upon the
+library and it gets pulled in at build time. This means that potentially the
+applications that use Amen can get slightly out of sync if one has deployed a
 newer version of Amen but the other hasn't updated yet but we decided that
-isn't too bad for two applications. We could have gone down the hardcore route
-like the Gov.uk's component library and provided a webservice that
+isn't too bad we we only have two applications. We could have gone down the
+hardcore route like Gov.uk's component library and provided a webservice that
 returns the latest template to an application so updates to the component
 library don't require multiple application deployments. But we decided that was
 loads of engineering effort, building the webservice and the client libraries
 that dealt with consuming the web service and caching responses, that was not
 worth the time required to develop it when we could be working on other things.
-Maybe that's different if you work for a company even more disparate than the BBC.
+Maybe that's different if you work for a company even more disparate than the
+BBC, which it turns out is possible but you need to be serving a nation state.
 
-We chose Twig as a templating language as, well it's the best one out there in
-PHP land and we're moving towards building sites with the Symfony and Silex
-frameworks which have excellent integration with Twig. We could have used a
-language-agnostic templating language like mustache or handlebars to help with
-portability into other languages and help render templates on the client-side,
-but we have no intention of moving to other languages and we prefer loading
-blobs of HTML over AJAX to complex client-side code those pros weren't
-relevant to us and sorting out the applications to handle two types of
-templating would have been rather tricky. If you want to use the same templates on client and server side then perhaps Handlebars might be a better
-fit for you.
+We chose Twig as a templating language as it's the one that integrates best
+with the Symfony and Silex frameworks that we're using to for most of our new
+development. We considered using a language-agnostic templating language like
+mustache or handlebars to help with portability into other languages and help
+render templates on the client-side. However we have no intention of moving to
+other languages and we prefer loading blobs of HTML over AJAX over complex
+client-side code. Handlebars would have been great choice if we cared about either of those things, but we don't. You might though. From what we saw it looked like Handlebars was noticably tricker to intergrate into our apps so it wasn't worth it when we don't care about it's other pros.
 </aside>
+</section>
 
 <section markdown="1">
 ## Amen Components
@@ -476,20 +484,19 @@ Frost's Atomic Design which splits your items into four categories.
 <section markdown="1">
 ## Amen Components
 
-```
-TODO GET better TREE of folder structure here
+```nohighlight
 Amen
-  - Atom
-  - Molecule
-  - Organism
-    - Broadcast
-    - Programme
-      - ProgrammePresenter.php
-      - ProgrammePresenterInterface.php
-      - _programme.scss
-      - programme.html.twig
-    - Promotion
-  - Template
+├── Atom
+├── Molecule
+├── Organism
+│   ├── Broadcast
+│   ├── Programme
+│   │   ├── ProgrammePresenterInterface.php
+│   │   ├── ProgrammePresenter.php
+│   │   ├── programme.html.twig
+│   │   └── _programme.scss
+│   └── Promotion
+└── Template
 ```
 <aside class="notes" markdown="1">
 As this is an abstracted library, we decided to have a single folder hierarchy
@@ -520,7 +527,9 @@ interface ProgrammePresenterInterface
 </div>
 
 <aside class="notes" markdown="1">
-Any component that has a template where variables get injected into it, for instance the programme component displays a title, also needs an interface to that template and a presenter class that implements said interface.
+Any component that has a template where variables get injected into it, also
+needs an interface to that template and a presenter class that implements said
+interface.
 
 The interface provides a way of formalising the data object we pass into the
 template - by using the type system to assert that we have various methods
@@ -528,8 +537,8 @@ available, then we ensure that the template won't throw an exception
 complaining about missing data.
 
 For instance if our programme template needs a title, a player url for when we
-link to iplayer, an image, a title. Then we can define a
-ProgrammePresenterInterface like so.
+link to iplayer, a synopsis and an image, amongst other things. Then we can
+define a ProgrammePresenterInterface like so.
 
 And we can safely know that any object that implements the
 ProgrammePresenterInterface can be successfully rendered by the template. This
@@ -549,24 +558,24 @@ We also need a Presenter Class to be a concrete implementation this interface.
 ```php
 class ProgrammePresenter implements ProgrammePresenterInterface
 {
-    public function __construct(Programme $programme, array $options) {
-      $this->programme = $programme;
-      $this->options = $options;
-    }
+  public function __construct(Programme $programme, array $options) {
+    $this->programme = $programme;
+    $this->options = $options;
+  }
 
-    public function getTitle() {
-      return $this->programme->getTitle();
-    }
+  public function getTitle() {
+    return $this->programme->getTitle();
+  }
 
-    public function getPlayerUrl() {
-      if ($this->programme instanceof Episode
-        && $this->programme->isVideo()
-      ) {
-          return '/iplayer/episode/' . $this->programme->getPid();
-        }
+  public function getPlayerUrl() {
+    if ($this->programme instanceof Episode
+      && $this->programme->isVideo()
+    ) {
+        return '/iplayer/episode/' . $this->programme->getPid();
+      }
 
-      return '/programmes/' . $this->programme->getPid();
-    }
+    return '/programmes/' . $this->programme->getPid();
+  }
 }
 ```
 </div>
@@ -574,18 +583,40 @@ class ProgrammePresenter implements ProgrammePresenterInterface
 <aside class="notes" markdown="1">
 This is where we can place all of our logic that deals with transforming our
 data domain objects into the data that we need within the template. This
-additional layer is useful because often your data domain objects don't always
-directly translate to a value needed by your templates. For instance the
-programme template needs to know what the playout link should be - should this
-programme play out in TV iPlayer or iPlayer Radio? It is a purely
-presentational concern so it doesn't belong in your data object, but putting
-this logic in your template makes it crufty and hard to understand.
+additional layer is useful because whilst many of the values the template needs
+can be passed through from the data object without modification, such as
+this getTitle(), in many other cases the mapping isn't that trivial as that.
+Often there shall be purely presentational concerns that make decisions based
+on the data. For instance, our programme template needs to know what the
+playout link should be - the URL is different for TV iPlayer and iPlayer Radio.
+It doesn't belong in your data object as it is an artefact of presentation, but putting this logic in your template makes it crufty and hard to understand.
+
 This solves the biggest thing we were unhappy with in our old system where our
 templates were getting hard to read in some cases as there was a lot of this
 sort of logic intermingled in with the HTML.
 
-Amen has a simple rule: Where ever possible all logic should be done in the
-Presenter. If a template has an if statement that has more than one conditional
+To solve this, Amen has introduced a simple rule, which I've ended up terming
+the Single Conditional Rule, as the person who came up with it couldn't think
+of a good name. Incidentally, after that joint effort I'm not sure which one
+of us gets to be called a "thought leader". We're both hoping it's the other
+one as "thought leader" is a bloody stupid term. Anyway the rule is:
+</aside>
+</section>
+
+<section markdown="1">
+## Single Conditional Rule
+
+Wherever possible all logic should be done in the Presenter.
+Template logic should be based upon a single conditional clause.
+
+<aside class="notes" markdown="1">
+Wherever possible all logic should be done in the Presenter. Template logic should be based upon a single conditional clause.
+
+Logic in templates is unavoidable, you're always going to need simple if
+statements and for loops, but we can move the majority of complexity into the
+Presenter class.
+
+So we say If a template has an if statement that has more than one conditional
 in it then it must be refactored into a method within the presenter. This means
 that your templates can focus on showing what is most important to them: your
 HTML content.
@@ -594,12 +625,12 @@ HTML content.
 
 <section markdown="1">
 ## Data domain objects
-which is implemented by your
+pass information to your
 
-## Component Library
-which is documented within your
+## Presenter Classes
+which provide display logic for your
 
-## Styleguide
+## Templates
 
 <aside class="notes" markdown="1">
 So you end up with the flow of a Data Domain object from your database is
@@ -622,16 +653,18 @@ Using Presenters also has another fun effect.
 ```php
 class ProgrammePresenterTest extends BasePresenterTest
 {
-    public function testBasic()
-    {
-        $pp = new ProgrammePresenter(
-            $this->getMockProgramme(),
-            array()
-        );
+  public function testBasic() {
+    $pp = new ProgrammePresenter(
+      $this->getMockProgramme(),
+      array()
+    );
 
-        $this->assertEquals('Mock Programme', $pp->getTitle());
-        $this->assertEquals('/programmes/b0110ck3', $pp->getPlayerUrl());
-    }
+    $this->assertEquals('Mongrels', $pp->getTitle());
+    $this->assertEquals(
+      '/programmes/b010t19z',
+      $pp->getPlayerUrl()
+    );
+  }
 }
 ```
 </div>
@@ -639,7 +672,14 @@ class ProgrammePresenterTest extends BasePresenterTest
 <aside class="notes" markdown="1">
 Now that all your logic is in an class file in your language of choice, you
 can go unit test all that logic like you would any other class. So each
-Presenter in your component should also have Unit Tests.
+Presenter in your component library should also have Unit Tests.
+
+Your presenters should be immutable - once you've instantiated them, you can't
+change any of the data within them which means that testing them is straight
+forward. One input, assert the one output, no messing about with changing
+state and all that lovely functional programming ideology. This is really
+useful to make sure we don't break any backwards compatibility now that this is a library used by
+other applications.
 
 Amen has also has another cool thing relating to testing. I found a Symfony
 framework module that can parse a html blob and look for elements in it using
@@ -655,20 +695,21 @@ CSS selectors and get their content.
 ```php
 class ProgrammeTemplateTest extends BaseTemplateTest
 {
-    public function testHideSynopsis()
-    {
-        $pp = new ProgrammePresenter(
-            $this->getMockProgramme(),
-            array('show_synopsis' => false)
-        );
+  public function testHiddenSynopsis() {
+    $pp = new ProgrammePresenter(
+      $this->getMockProgramme(),
+      array('show_synopsis' => false)
+    );
 
-        $crawler = $this->getCrawlerForTemplate(
-            'Organism/Programme/programme.html.twig',
-            array('programme' => $pp)
-        );
+    $crawler = $this->getCrawlerForTemplate(
+      'Organism/Programme/programme.html.twig',
+      array('programme' => $pp)
+    );
 
-        $this->assertEmpty($crawler->filter('.programme__synopsis'));
-    }
+    $this->assertEmpty(
+      $crawler->filter('.programme__synopsis')
+    );
+  }
 }
 ```
 
@@ -677,6 +718,9 @@ So we're unit testing our templates!
 
 For instance if we pass in an option to say don't render the programme
 synopsis, then assert that element doesn't exist in the output.
+
+Again, this is pretty trivial but it can be a useful first canary to make sure
+you don't break any backwards compatibility.
 </aside>
 </div>
 
@@ -690,14 +734,26 @@ synopsis, then assert that element doesn't exist in the output.
 * Keep your HTML templates clean
 * Test all the things
 
+<aside class="notes" markdown="1">
+So in conclusion, Formalize your design system, write it down and make it
+something you can point at and refer to.
+
+Write all your presentation logic in presenter classes so that your data
+objects can focus on data-y concerns and your HTML templates can focus on
+HTML output.
+
+And once you're written a properly abstracted tiered system whose parts can be
+tested in isolation, write those tests.
+</aside>
+
 </section>
 
 <section markdown="1">
 ## Link Dump
 
 * [Bridging the gap between designers and developers](https://www.youtube.com/watch?v=ciG-A_1FyVg)
-* [Modular Design](http://www.fivesimplesteps.com/products/modular-design)
-* [Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)
+* [Modular Design at FutureLearn](http://www.fivesimplesteps.com/products/modular-design)
+* [Brad Frost's Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)
 * [Amen](http://amen.tools.bbc.co.uk/)
 
 </section>
