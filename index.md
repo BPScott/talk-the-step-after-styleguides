@@ -752,10 +752,10 @@ tested in isolation, write those tests.
 <section markdown="1">
 ## Link Dump
 
-* [Bridging the gap between designers and developers](https://www.youtube.com/watch?v=ciG-A_1FyVg)
-* [Modular Design at FutureLearn](http://www.fivesimplesteps.com/products/modular-design)
-* [Brad Frost's Atomic Design](http://bradfrost.com/blog/post/atomic-web-design/)
-* [Amen](http://amen.tools.bbc.co.uk/)
+* Bridging the gap between designers and developers:<br> [www.youtube.com/watch?v=ciG-A_1FyVg](https://www.youtube.com/watch?v=ciG-A_1FyVg)
+* Modular Design at FutureLearn:<br> [www.fivesimplesteps.com/products/modular-design](http://www.fivesimplesteps.com/products/modular-design)
+* Atomic Web Design:<br> [bradfrost.com/blog/post/atomic-web-design](http://bradfrost.com/blog/post/atomic-web-design/)
+* Amen:<br> [amen.tools.bbc.co.uk](http://amen.tools.bbc.co.uk/)
 
 </section>
 
