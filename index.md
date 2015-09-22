@@ -82,9 +82,10 @@ You and your team agree
 upon a standard way that you want your brand to be presented - what colours
 you use, what typefaces, what font sizes, how you want to represent you common
 domain objects - such as a "Programme object" to a show a programme on
-aggregation pages like A-Zs in the /programmes world. You talk all these ideas
+aggregation pages like A-Zs in the /programmes world.
+You talk all these ideas
 and give them names and by giving them names you gain power over them, you no
-longer have to talk about what something looks like, you talk about what it IS.
+longer have to talk about what something looks like and it's properties, you talk about what it IS.
 
 </aside>
 </section>
@@ -153,12 +154,8 @@ a picture."
 </aside>
 </section>
 
-<section markdown="1">
-## Style that thing
-
-TODO Picure of programme objects being laid out from some collection page
-e.g. http://www.bbc.co.uk/programmes/p01gyd7j?page=2
-
+<section markdown="1" data-background="images/collection-page.png"
+data-background-size="1024px">
 <aside class="notes" markdown="1">
 But if somebody told me that a page should be 24 programme objects laid out in
 a three column grid at the large breakpoint I'd be pretty happy implementing
@@ -217,9 +214,11 @@ point". The development team knew exactly what that email meant as it was all pr
 ### Are Implementation Agnostic
 
 <aside class="notes" markdown="1">
-This notion of a Design System is agnostic to any code you write. A single
-design system can be implemented in HTML, Android apps or iOS apps - though
-your system shall probably have something to say about how to integrate
+This notion of a Design System is agnostic to any code you write. The design
+system sits above any code you write.
+
+A single design system can be implemented in HTML, Android apps or iOS apps -
+though your system shall probably have something to say about how to integrate
 environment-level conventions like "buttons should look like the OS buttons in
 native apps".
 
@@ -249,6 +248,8 @@ at the Guardian. And Alla Kholmatova spoke at this years Responsive Day Out
 about the process of modular design at FutureLearn.
 
 There'll be links at the end of the slide deck to both of those talks.
+
+Once you’ve got all these ideas for your common patterns you can then write them into your application
 </aside>
 
 </section>
@@ -262,13 +263,13 @@ them into your application - creating css and html fragments within your app
 and reusing those styles all over the shop. By leveraging your prior work you
 can vastly reduce the amount of effort required to create new templates,
 especially if they reuse existing components. However that's meerly "creating a
-library of components". There no place to demonstrate those components
+library of components". There is no place to demonstrate those components
 that you've created without any other context around them or any documentation
 on how to use them. It's tough for the other members of your team to know that
 these items already exist or how to use them if there isn't a central place to
 demonstrate their use.
 
-So you've got two parts:
+So you've got two implementation tiers that sit upon your design system:
 </aside>
 </section>
 
@@ -307,18 +308,17 @@ The foundations pervade your entire site, they aren't so much about concrete
 blocks of content, you can't go to a page and say "that bit" but they define
 the underlying rhythm and brand of your site. The coloring, typography, grid
 systems, form elements - that apply on, there abouts, a per HTML element basis
-so there's no value in creating HTML templates for these. If you're familiar
-with Brad Frost's Atomic Design then these are the atoms. If if you're not then don't worry, I'll be covering that in more detail later.
+so there's no value in creating HTML templates for these.
 
 Then there's the items that are rendered using those visual foundations and
 often correspond to your domain objects. Domain objects being those things you
 use to model your problem domain - think entities in your database so for
-instance /programmes has things like programme and broadcast objects, BBC News
-would have an article object and BBC Food would have a recipe object. These
-items require a whole bunch of html to render and probably have some logic
-attached to them, for instance if the programme domain object we're rendering
-is available to watch then show a play link. You can write these as HTML
-partials in whatever templating language you choose.
+instance /programmes has things like programme and broadcast objects, or a
+travel site like the Trip Advisor would have things like trips, hotels and
+flights. These items require a whole bunch of html to render and probably have
+some logic attached to them, for instance for a programme object we
+want to inject the programme's title into the template and if the programme is
+available to watch then show a play link. They are rendered as HTML partials in your templating language of choice.
 
 
 Being an enterprising sort of people, many developers have created tools to
@@ -500,8 +500,9 @@ Amen
 ```
 <aside class="notes" markdown="1">
 As this is an abstracted library, we decided to have a single folder hierarchy
-with everything relating to a component all living within the same folder. There's no value in repeating that
-folder structure within /styles  and /templates folder. When you're working
+with everything relating to a component all living within the same folder.
+There's no value splitting the contents out by type and having /styles and
+/templates folders that each have a single item in them. When you're working
 you're in the mindset of "I'm working on the X object" not "I'm working on
 stylesheets".
 
