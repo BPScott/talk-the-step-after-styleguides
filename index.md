@@ -155,7 +155,7 @@ a picture."
 </section>
 
 <section markdown="1" data-background="images/collection-page.png"
-data-background-size="1024px">
+data-background-size="contain">
 <aside class="notes" markdown="1">
 But if somebody told me that a page should be 24 programme objects laid out in
 a three column grid at the large breakpoint I'd be pretty happy implementing
