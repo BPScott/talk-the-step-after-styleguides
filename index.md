@@ -10,6 +10,50 @@ size: [1024, 768]
 # The Step After Styleguides
 
 <small>Ben Scott / [@BPScott](http://twitter.com/BPScott)</small>
+
+<aside class="notes" markdown="1">
+Welcome to the BBC section of the day, I'm representing London and Emma
+shall be representing Salford.
+
+Though I've spotted a worrying trend, the first EpicFEL had one BBC speaker,
+last year we had one as well and this year we've got two. I know it might be a
+little early but if this Fibonaccian trend continues then Front End London
+speaker slots shall be entirely saturated by BBC staff in 2018.
+</aside>
+</section>
+
+<section markdown="1" data-background="images/bbc-per-year-2019.png"
+data-background-size="contain">
+
+<aside class="notes" markdown="1">
+And even more concerning, if the trend continues beyond that, FEL and
+eventually the BBC shall have to do some serious restructuring to accommodate
+the projected growth.
+
+As by 2031 FEL shall have overtook South by South West's
+week long excuse for a party as the world's largest technology event with 4181
+speakers.
+</aside>
+</section>
+
+<section markdown="1" data-background="images/bbc-per-year-2031.png"
+data-background-size="contain">
+
+<aside class="notes" markdown="1">
+As by 2031 FEL shall have overtook South by South West's
+week long excuse for a party as the world's largest technology event with 4181
+speakers.
+
+Fortunatly though, I'm not here to talk about the impending FELpocalypse or
+questionable statistics.
+</aside>
+</section>
+
+
+<section markdown="1">
+# The Step After Styleguides
+
+<small>Ben Scott / [@BPScott](http://twitter.com/BPScott)</small>
 </section>
 
 
