@@ -775,5 +775,9 @@ fragments.
 
 <small>Ben Scott / [@BPScott](http://twitter.com/BPScott)</small>
 
-<small>[reload.me.uk/talk-the-step-after-styleguides](http://www.reload.me.uk/talk-the-step-after-styleguides)</small>
+<small>
+    [reload.me.uk/talk-the-step-after-styleguides](http://www.reload.me.uk/talk-the-step-after-styleguides)
+    <br>
+    [Licensed under CC-BY-SA](https://creativecommons.org/licenses/by-sa/4.0/)
+</small>
 </section>
